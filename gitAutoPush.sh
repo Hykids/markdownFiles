@@ -1,20 +1,13 @@
-#!/bin/bash
-# 上面中的 #! 是一种约定标记, 它可以告诉系统这个脚本需要什么样的解释器来执行;
+set -e
 
-echo "放弃有道云的利器 GitAutoPush Starting..."
-time=$(date "+%Y-%m-%d %H:%M:%S")
-git add .
+npm run github:build
 
-read -t 30 -p "请输入提交注释:" msg
+cd docs/.vuepress/github
 
-if  [ ! "$msg" ] ;then
-    echo "[commit message] 默认提交, 提交人: $(whoami), 提交时间: ${time}"
-	git commit -m "默认提交, 提交人: $(whoami), 提交时间: ${time}"
-else
-    echo "[commit message] $msg, 提交人: $(whoami), 提交时间: ${time}"
-	git commit -m "$msg, 提交人: $(whoami), 提交时间: ${time}"
-fi
+git init
+git add -A
+git commit -m 'deploy'
 
-	
-git push origin master
-echo "放弃有道云的利器 GitAutoPush Ending..."
+git push -f git@github.com:Hykids/markdownFiles.git
+
+cd -

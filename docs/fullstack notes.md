@@ -221,13 +221,7 @@ const reducer = function (state, action) {
 
 
 
-# MongoDB
 
-```javascript
-npm add mongoose
-
-const mongoose =require('mongoose')
-```
 
 # 常用命令
 
