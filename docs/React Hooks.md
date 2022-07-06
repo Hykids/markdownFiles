@@ -98,3 +98,11 @@ const Reducer = (state, actions) => {
 }
 ```
 
+## 参考连接
+
+https://www.ruanyifeng.com/blog/2020/09/react-hooks-useeffect-tutorial.html
+
+https://www.ruanyifeng.com/blog/2019/09/react-hooks.html
+
+https://zh-hans.reactjs.org/docs/hooks-state.html
+

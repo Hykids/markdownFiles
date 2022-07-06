@@ -92,6 +92,26 @@ POST是唯一的HTTP请求类型，既不*安全*也不*幂等*。如果我们�
 
 在我们的环境中，问题在于，默认情况下，在浏览器中运行的应用的JavaScript代码只能与同一<u>来源</u>（如果两个 URL 的 [protocol](https://developer.mozilla.org/zh-CN/docs/Glossary/Protocol)、[port (en-US)](https://developer.mozilla.org/en-US/docs/Glossary/Port) (如果有指定的话) 和 [host](https://developer.mozilla.org/zh-CN/docs/Glossary/Host) 都相同的话，则这两个 URL 是*同源*）的服务器通信。
 
+- 跨域的原理
+
+  **跨域**，是指浏览器不能执行其他网站的脚本。它是由浏览器的`同源策略`造成的。
+  **同源策略**,是浏览器对 JavaScript 实施的安全限制，只要`协议、域名、端口`有任何一个不同，都被当作是不同的域。
+  **跨域原理**，即是通过各种方式，`避开浏览器的安全限制`。
+
+- 解决方案
+
+  最初做项目的时候，使用的是jsonp，但存在一些问题，使用get请求不安全，携带数据较小，后来也用过iframe，但只有主域相同才行，也是存在些问题，后来通过了解和学习发现使用代理和proxy代理配合起来使用比较方便，就引导后台按这种方式做下服务器配置，在开发中使用proxy，在服务器上使用nginx代理，这样开发过程中彼此都方便，效率也高；现在h5新特性还有 windows.postMessage()
+
+  - **JSONP**：
+    ajax 请求受同源策略影响，不允许进行跨域请求，而 script 标签 src 属性中的链 接却可以访问跨域的 js 脚本，利用这个特性，服务端不再返回 JSON 格式的数据，而是 返回一段调用某个函数的 js 代码，在 src 中进行了调用，这样实现了跨域。
+
+    步骤：
+
+    1. 去创建一个script标签
+    2. script的src属性设置接口地址
+    3. 接口参数，必须要带一个自定义函数名，要不然后台无法返回数据
+    4. 通过定义函数名去接受返回的数据
+
 因为我们的服务器在localhost 3001端口，而我们的前端在localhost 3000端口，它们没有相同的起源。请记住，[同源策略](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)和 CORS 并不是专门针对 React 或 Node。它们实际上是网络应用操作的普遍原则。我们可以通过使用 Node's [cors](https://github.com/expressjs/cors) 中间件来允许来自其他\*原点\*的请求。在你的后端仓库中，用命令安装\*cors\*。
 
 ```bash
